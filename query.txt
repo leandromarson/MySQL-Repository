@@ -1,0 +1,226 @@
+create database pratica char set utf8;
+use pratica;
+
+create table cadastro (
+	id tinyint not null auto_increment,
+    nome varchar(30) not null,
+    datanasc date,
+    telefone varchar(11),
+    sexo enum('M','F'),
+    primary key(id),
+    unique key(nome)
+    )char set utf8;
+    
+    desc cadastro;
+    show columns from cadastro;
+    
+    insert into cadastro(nome,datanasc,telefone,sexo) 
+    values('Jumaria',1998-12-10,'9993-9923','M'),
+		('Maricleide',1988-02-21,'9492-9123','F');
+        
+        insert into cadastro(nome,datanasc,telefone,sexo) 
+    values('Mendocardo',1978-10-11,'9243-9923','M'),
+		('Xupscreide',1999-12-12,'9435-2123','F');
+        
+        update cadastro set datanasc = '1999-12-12' where id =4;
+        
+        select distinct sexo from cadastro;
+        select nome,telefone from cadastro;
+        select cadastro.datanasc from cadastro;
+        
+        select * from cadastro limit 2;
+        select * from cadastro limit 2,4;#3 a 4
+        select * from cadastro;
+        select * from cadastro order by datanasc;
+        select * from cadastro order by telefone,sexo;
+        select * from cadastro where id=4;
+        select * from cadastro where id!=4;
+        select * from cadastro where id>1;
+        select * from cadastro where id<=3;
+        select * from cadastro where id between 2 and 4;
+        select * from cadastro where sexo='M';
+        select * from cadastro where numero=444 and id =4;
+        select * from cadastro where numero>=100 and (id=1 or sexo = 'F');
+        select * from cadastro where sexo= 'F' or id=4;
+        select * from cadastro where numero in (111,333,444);
+        select * from cadastro where numero not in (111,444);
+        select concat(nome,',',sexo) from cadastro;
+        select concat(datanasc,' | ',telefone) as datanasc_telefone from cadastro;
+        select nome,numero+20 as numero from cadastro;
+        select numero,upper(nome) as nome from cadastro;
+        select sqrt(numero) as numero,lower(nome) as nome from cadastro;
+        select avg(numero) as numero , nome from cadastro;
+        select sum(numero) as numero_soma from cadastro;
+        select numero from cadastro where numero>200 order by numero desc;
+        select numero from cadastro where numero>200 order by numero asc;
+        select numero,nome from cadastro where numero >(select avg(numero) from cadastro) order by numero desc;
+        select numero,nome from cadastro where nome like 'M%';
+        select numero,nome from cadastro where nome like '%e';
+        select min(numero) as numero_menor from cadastro;
+        
+        
+        alter table cadastro add column idade int(3);
+        alter table cadastro drop column idade;
+        alter table cadastro add column numero int(3) after nome;
+        
+        update cadastro set numero = 444 where id = 4;
+        
+        use pratica;
+        
+        create table numeros(
+			id tinyint not null auto_increment,
+            inteiros int(5),
+            decimais decimal(5,2),
+            primary key(id)		
+        )char set utf8;
+        
+        insert into numeros(inteiros,decimais) 
+    values(24716,11001.30),
+			(1000,502.55),
+            (200,1.99),
+            (530,209.54);
+            
+            update numeros set decimais=245.44 where id = 1; 
+            
+            select * from numeros;
+        
+        
+        show databases;
+        
+        use pratica;
+        show tables;
+        
+        desc curso;
+        desc pocarronios;
+        
+        select * from cursos order by nome;
+        select * from cursos order by nome asc;
+        select * from cursos order by nome desc;
+        select nome,carga,ano from cursos order by ano,nome;
+        select * from cursos where ano = 2016 order by nome;
+        select nome,ano from cursos where ano<=2015 order by ano; 
+        select nome,ano from cursos where ano!=2015 order by ano,nome;
+        select ano,nome from cursos where ano between 2014 and 2016 order by ano desc,nome;
+        select ano,nome from cursos where ano in(2014,2016,2018) order by ano desc, nome;
+        select nome,ano,carga,totaulas from cursos where carga> 35 and totaulas<30;
+        select nome,ano,carga,totaulas from cursos where carga>35 or totaulas<30;
+        select * from cursos where nome='PHP';
+        select * from cursos where nome like 'p%';
+        select * from cursos where nome like '%a';
+        select * from cursos where nome like '%a%';
+        select * from cursos where nome not like '%a%';
+        
+        update cursos set nome = 'PáOO' where idcurso=9;
+        select * from cursos where nome like 'ph%p%';
+        select * from cursos where nome like 'ph%p_';
+        select * from cursos where nome like 'p_p%';
+        select * from cursos where nome like 'p__t%';
+        select * from gafanhotos where nome like '%silva%';
+        select * from gafanhotos where nome like '%_silva%';
+        select * from gafanhotos where nome like 'silva%';
+        select distinct carga from cursos;
+        select distinct nacionalidade from gafanhotos order by nacionalidade;
+        select count(nome) from cursos;
+        select count(*) from cursos where carga>40;
+        select max(carga) from cursos;
+        select max(totaulas) from cursos where ano = '2016';
+        select nome,min(totaulas) from cursos where ano = ' 2016';
+        select sum(totaulas) from cursos where ano = '2016';
+        select avg(totaulas) from cursos where ano = '2016';
+        select nome from gafanhotos where sexo like 'f';
+        select * from gafanhotos where nascimento between '2000-01-01' and '2015-12-31' order by nome;
+        select * from gafanhotos where profissao like 'programador' and  sexo like 'm' order by nome;
+        select * from gafanhotos where sexo like 'f' and nacionalidade like 'brasil' and nome like 'j%' order by nome;
+        select nome,nacionalidade from gafanhotos where sexo like 'm' and nome like '%silva%' and nacionalidade not like 'brasil' and peso < 100;
+        select max(altura) from gafanhotos where sexo like 'm';
+        select avg(peso) from gafanhotos;
+        select min(peso) from gafanhotos where sexo like 'f' and nacionalidade != 'brasil' and nascimento between '1990-01-01' and '2000-12-31';
+        select count(altura) from gafanhotos where altura>1.90;
+        select carga , count(nome) from cursos group by carga;
+        select totaulas, count(*) from cursos group by totaulas order by totaulas;
+        select * from cursos where totaulas=12;
+        select totaulas, carga, count(*) from cursos where totaulas=30 group by carga;
+        select carga , count(nome) from cursos group by carga having count(nome)>=5;
+        select ano, count(*) from cursos group by ano having ano>2013 order by count(*) desc;
+        select avg(carga) from cursos;
+        select count(*), carga from cursos where ano>2015 group by carga having carga>(select avg(carga) from cursos);
+        select count(*),profissao from gafanhotos group by profissao;
+        select count(*),sexo from gafanhotos where nascimento>='2005-01-01' group by sexo;
+        select count(*),nacionalidade from gafanhotos where nacionalidade != 'brasil' group by nacionalidade having count(*) >=3;
+        select count(*),altura from gafanhotos where peso>100 group by altura having altura>(select avg(altura) from gafanhotos);
+        
+    desc materia;
+    create table semmat(
+		id tinyint not null,
+        idsem tinyint,
+        idmat tinyint,
+        primary key(id),
+        foreign key(idsem) references semestre(idsem),
+        foreign key(idmat) references materia(idmat)
+    )char set utf8;
+    
+    select * from aluno;
+    
+    drop table curso;
+    drop table pocarronios;
+   
+	alter table gafanhotos add column cursopreferido int;
+    alter table gafanhotos add foreign key (cursopreferido) references cursos(idcurso);
+     
+    desc gafanhotos;
+    
+    select * from gafanhotos;
+    select * from cursos;
+    
+    update gafanhotos set cursopreferido = 6 where id = 1;
+    
+    delete from cursos where idcurso = 6;
+    delete from cursos where idcurso = 28;
+   
+  select gafanhotos.nome, cursos.nome , cursos.ano from gafanhotos inner join cursos  
+  on gafanhotos.cursopreferido = cursos.idcurso order by gafanhotos.nome;
+  
+    select g.nome, c.nome , c.ano from gafanhotos as g inner join cursos as c  
+  on g.cursopreferido = c.idcurso order by g.nome;
+  
+  select g.nome , c.nome , c.ano from gafanhotos as g left outer join cursos as c
+  on g.cursopreferido = c.idcurso order by g.nome;
+  
+  select g.nome , c.nome, c.ano from gafanhotos as g right join cursos as c
+  on g.cursopreferido = c.idcurso order by g.nome desc;
+  
+  create table assiste(
+	idgafanhoto int,
+    idcurso int,
+    foreign key(idgafanhoto) references gafanhotos(id),
+    foreign key(idcurso) references cursos(idcurso)
+    
+    
+  )char set utf8;
+  
+  alter table assiste add column id int first;
+  alter table assiste add primary key(id);
+  alter table assiste add column dataa date after id;
+  
+  desc gafanhoto_assiste_curso;
+  desc gafanhotos;
+  
+  alter table assiste modify id int auto_increment ;
+  alter table assiste change dataa data date;
+  alter table assiste rename to gafanhoto_assiste_curso;
+  
+  insert into gafanhoto_assiste_curso values (default,'2014-03-01',1,2);
+  
+  select * from gafanhoto_assiste_curso;
+  
+  select g.id, g.nome,a.idgafanhoto,a.idcurso from gafanhotos as g join gafanhoto_assiste_curso as a on g.id=a.idgafanhoto; 
+ select g.nome, a.idcurso from gafanhotos g join gafanhoto_assiste_curso a on g.id=a.idgafanhoto order by g.nome; 
+  select g.nome, c.nome , a.data from gafanhotos g join gafanhoto_assiste_curso a join cursos c on g.id=a.idgafanhoto and c.idcurso=a.idcurso order by g.cursoscursosgafanhoto_assiste_cursogafanhotosnome;
+  
+      
+        
+        
+        
+        
+        
+        
